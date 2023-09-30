@@ -1,7 +1,7 @@
 const carMarket = require("./obj.js");
 //console.log(carMarket.sellers[0]);
 
-// 1. Agency Operations
+// 1. Agency Operations start ---------------------------------------------------------------------
 // Search for a car agency by its name or ID.
 carMarket.getCarAgency = function (nameOrId) {
     this.sellers.forEach(agency => {
@@ -24,10 +24,9 @@ carMarket.getAgency = function (nameOrId) {
     return returnAgency;
 }
 
-
 // Retrieve all agencies' names.
 carMarket.getAllAgencies = function () {
-    //const agenciesNames = [];
+    const agenciesNames = [];
     this.sellers.forEach(agency => {
         agenciesNames.push(agency.agencyName);
     })
@@ -40,7 +39,6 @@ carMarket.getAllAgencies = function () {
 // Add a new car to an agency's inventory
 //get name or id of an agency ,and car brand and model,
 //assume that the brand is in the agency
-
 carMarket.addCar = function (nameOrId, brand, carModel) {
     let currentAgency = this.getAgency(nameOrId);
     let carAdded = false;
@@ -56,8 +54,8 @@ carMarket.addCar = function (nameOrId, brand, carModel) {
         //that matches the given brand so we add new one!
         if (!carAdded) {
             currentAgency.cars.push({
-                brand:brand,
-                models:[carModel]
+                brand: brand,
+                models: [carModel]
             })
         }
     }
@@ -145,9 +143,9 @@ carMarket.getTotalAgencyRevenue = function (nameOrId) {
                 revenue += car.price;
             }
         }
+        console.log(revenue);
+        return revenue;
     }
-    console.log(revenue);
-    return revenue;
 }
 // test
 // let res = carMarket.getAgency('The Auto World');
@@ -169,7 +167,6 @@ carMarket.transferCarBetweenAgencies = function (brand, carNumber, nameOrId1, na
         }
     }
 }
-
 // //test
 // let res = carMarket.getAgency('CarMax');
 // console.log(res);
@@ -181,4 +178,168 @@ carMarket.transferCarBetweenAgencies = function (brand, carNumber, nameOrId1, na
 // console.log(res2);
 // console.log('The Auto World:+A+\n',res2.cars[res2.cars.length-1]);
 
+// Agency Operations end ------------------------------------------------------------------------
 
+//2. Customer Operations:start--------------------------------------------------------------------- 
+// Search for a customer by their name or ID.
+carMarket.getTheCustomer = function (nameOrId) {
+    this.customers.forEach(customer => {
+        if (customer.name === nameOrId || customer.id === nameOrId) {
+            console.log(customer);
+        }
+    })
+}
+// //test
+// carMarket.getTheCustomer('Lilah Goulding');
+// carMarket.getTheCustomer('cnTobUDy6');
+
+//for use in other functions
+carMarket.getCustomer2 = function (nameOrId) {
+    let customer1;
+    this.customers.forEach(customer => {
+        if (customer.name === nameOrId || customer.id === nameOrId) {
+            customer1 = customer;
+        }
+    })
+    return customer1;
+}
+
+// Retrieve all customers' names.
+carMarket.getAllCustomers = function () {
+    const customersNames = [];
+    this.customers.forEach(customer => {
+        customersNames.push(customer.name);
+    })
+    console.log(customersNames);
+    //return customersNames;
+}
+// //test
+// carMarket.getAllCustomers();
+
+// Change the cash of a customer.
+//gets customer nameOrId and change the customer cash to newCash
+carMarket.ChangeCustomerCash = function (nameOrId, newCash) {
+    let customer = this.getCustomer2(nameOrId);
+    if (customer !== undefined) {
+        customer.cash = newCash;
+    }
+}
+// //test
+// carMarket.getTheCustomer('Ravi Murillo');
+// carMarket.ChangeCustomerCash('Ravi Murillo',30000);
+// carMarket.getTheCustomer('Ravi Murillo');
+
+// Calculate the total value of all cars owned by a specific customer
+carMarket.getCustomerTotalCarValue = function (nameOrId) {
+    let customer1 = this.getCustomer2(nameOrId);
+    let totalValue = 0
+    if (customer1 !== undefined) {
+        for (car of customer1.cars) {
+            totalValue += car.price;
+        }
+        console.log(totalValue);
+        return totalValue;
+    }
+}
+// //test
+// let res;
+// res=carMarket.getCustomerTotalCarValue('Lilah Goulding');
+// res
+// res=carMarket.getCustomerTotalCarValue('Ravi Murillo');
+// res
+// res=carMarket.getCustomerTotalCarValue('Bob Steel');
+// res
+// res=carMarket.getCustomerTotalCarValue('Will Reyes');
+// res
+//   Customer Operations:end----------------------------------------------------------------------- 
+
+//3. Car Operations:start-------------------------------------------------------------------------- 
+// Retrieve all cars available for purchase.
+carMarket.carsAvailable = function () {
+    const carsArray = [];
+    for (agancy of this.sellers) {
+        for (brand of agancy.cars) {
+            for (car of brand.models) {
+                carsArray.push(car);
+            }
+        }
+    }
+    console.log(carsArray);
+    return carsArray;
+}
+// //test
+// carMarket.carsAvailable();
+
+carMarket.carsAvailableWithBrand = function (brand) {
+    const carsArray = [];
+    for (agancy of this.sellers) {
+        for (b of agancy.cars) {
+            if (b.brand === brand||brand==='') {
+                for (car of b.models) {
+                    carsArray.push(car);
+                }
+            }
+        }
+    }
+    return carsArray;
+}
+// //test
+// carMarket.carsAvailableWithBrand('bmw');
+
+// Search for cars based on certain criteria. The search parameters should include the
+// production year, price, and optionally, the brand of the car
+carMarket.searchCars = function (year, price, brand = '') {
+    let carsArray = [];
+    let wantedCars = []
+    carsArray = this.carsAvailableWithBrand(brand);
+    carsArray.forEach(car => {
+        if (car.year === year && car.price === price) {
+            wantedCars.push(car);
+        }
+    })
+    console.log(wantedCars);
+    return wantedCars;
+}
+// //test
+// let res = carMarket.searchCars(2019, 296900);
+// res
+// res = res.length;
+// res
+
+// Return the most expensive car available for sale
+carMarket.getMostExpensiveCar=function(){
+    let carsArray = this.carsAvailableWithBrand('');
+    let expensiveCar;
+    for(car of carsArray){
+        if(expensiveCar===undefined||expensiveCar.price<car.price){
+            expensiveCar=car;
+        }
+    }
+    console.log(expensiveCar);
+    return expensiveCar;
+}
+
+//Return the cheapest car available for sale
+carMarket.getCheapestCar=function(){
+    let carsArray = this.carsAvailableWithBrand('');
+    let cheapestCar;
+    for(car of carsArray){
+        if(cheapestCar===undefined||cheapestCar.price>car.price){
+            cheapestCar=car;
+        }
+    }
+    console.log(cheapestCar);
+    return cheapestCar;
+
+}
+//test
+carMarket.carsAvailable();
+console.log('MostExpensiveCar----->');
+carMarket.getMostExpensiveCar();
+console.log('CheapestCar----->');
+carMarket.getCheapestCar();
+
+
+
+
+//   Car Operations:end---------------------------------------------------------------------------- 
