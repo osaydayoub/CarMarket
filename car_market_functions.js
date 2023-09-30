@@ -274,7 +274,7 @@ carMarket.carsAvailableWithBrand = function (brand) {
     const carsArray = [];
     for (agancy of this.sellers) {
         for (b of agancy.cars) {
-            if (b.brand === brand||brand==='') {
+            if (b.brand === brand || brand === '') {
                 for (car of b.models) {
                     carsArray.push(car);
                 }
@@ -307,12 +307,12 @@ carMarket.searchCars = function (year, price, brand = '') {
 // res
 
 // Return the most expensive car available for sale
-carMarket.getMostExpensiveCar=function(){
+carMarket.getMostExpensiveCar = function () {
     let carsArray = this.carsAvailableWithBrand('');
     let expensiveCar;
-    for(car of carsArray){
-        if(expensiveCar===undefined||expensiveCar.price<car.price){
-            expensiveCar=car;
+    for (car of carsArray) {
+        if (expensiveCar === undefined || expensiveCar.price < car.price) {
+            expensiveCar = car;
         }
     }
     console.log(expensiveCar);
@@ -320,26 +320,81 @@ carMarket.getMostExpensiveCar=function(){
 }
 
 //Return the cheapest car available for sale
-carMarket.getCheapestCar=function(){
+carMarket.getCheapestCar = function () {
     let carsArray = this.carsAvailableWithBrand('');
     let cheapestCar;
-    for(car of carsArray){
-        if(cheapestCar===undefined||cheapestCar.price>car.price){
-            cheapestCar=car;
+    for (car of carsArray) {
+        if (cheapestCar === undefined || cheapestCar.price > car.price) {
+            cheapestCar = car;
         }
     }
     console.log(cheapestCar);
     return cheapestCar;
-
 }
-//test
-carMarket.carsAvailable();
-console.log('MostExpensiveCar----->');
-carMarket.getMostExpensiveCar();
-console.log('CheapestCar----->');
-carMarket.getCheapestCar();
+// //test
+// carMarket.carsAvailable();
+// console.log('MostExpensiveCar----->');
+// carMarket.getMostExpensiveCar();
+// console.log('CheapestCar----->');
+// carMarket.getCheapestCar();
+
+//   Car Operations:end------------------------------------------------------------------------------ 
+//4. Car Purchase Operations:start---------------------------------------------------------------------
+// Implement a sellCar function that sells a car to a specific customer. This function
+// should:
+// 1.Check the availability of the car at the agency.
+// 2.Verify if the customer has enough cash to purchase the car.
+// 3.Update the cash and credit for both the agency and the customer accordingly.
+// 4.Update the tax authority's records.
+//gets name or id of the customer , name or id of agancy 
+carMarket.sellCar = function (customerNameOrId, agancyNameOrId2, brandName, carName, year) {
+    let customer = this.getCustomer2(customerNameOrId);
+    let agancy = this.getAgency(agancyNameOrId2);
+    let wantedCar;
+    if (customer !== undefined && agancy !== undefined) {
+        for (car of agancy.cars) {
+            if (car.brand === brandName) {
+                for (model of car.models) {
+                    if (model.name === carName && model.year === year && model.price <= customer.cash) {
+                        wantedCar = model;
+                        break;
+                    }
+                }
+            }
+            if (wantedCar !== undefined) {
+                break;
+            }
+        }
+        // we found an appropriate car!
+        if (wantedCar !== undefined) {
+            this.removeCarFromAgency(agancy.agencyId,brandName, wantedCar.carNumber);
+            agancy.cash+=wantedCar.price;
+            wantedCar.ownerId=customer.id;
+            customer.cash-=wantedCar.price;
+            customer.cars.push(wantedCar);
+            // TODO Update the tax authority's records.
+
+
+
+        }
+    }
+}
+// //test
+// let res = carMarket.getAgency('CarMax');
+// console.log(res);
+// console.log('CarMax:+B+\n',res.cars[1]);
+// let res2=carMarket.getCustomer2('Ravi Murillo');
+// console.log(res2);
+// carMarket.sellCar('Ravi Murillo','CarMax','toyota','Land Cruiser',2005);
+// console.log('customer A---->',res2);
+// console.log('agency-=--=-=A',res);
+// console.log('CarMax:+A---+\n',res.cars[1]);
 
 
 
 
-//   Car Operations:end---------------------------------------------------------------------------- 
+
+// Calculate and return the total revenue of the entire market (Method:
+//     getTotalMarketRevenue ).
+
+//   Car Purchase Operations:end---------------------------------------------------------------------
