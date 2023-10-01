@@ -10,8 +10,6 @@ carMarket.getCarAgency = function (nameOrId) {
         }
     })
 }
-// carMarket.getCarAgency("26_IPfHU1");
-// carMarket.getCarAgency("Best Deal");
 
 // return agency without console for my use!
 carMarket.getAgency = function (nameOrId) {
@@ -33,8 +31,6 @@ carMarket.getAllAgencies = function () {
     console.log(agenciesNames);
     //return agenciesNames;
 }
-//test
-//carMarket.getAllAgencies();
 
 // Add a new car to an agency's inventory
 //get name or id of an agency ,and car brand and model,
@@ -60,18 +56,6 @@ carMarket.addCar = function (nameOrId, brand, carModel) {
         }
     }
 }
-// //test
-// const newCar = {
-//     name: "3",
-//     year: 2015,
-//     price: 137000,
-//     carNumber: "1111",
-//     ownerId: "OSA5M5AZ",
-// }
-// let res = carMarket.getAgency('Best Deal');
-// console.log(res.cars[1])
-// carMarket.addCar('Best Deal', 'toyota', newCar);
-// console.log(res.cars[1])
 
 //Remove a car from an agency's inventory.
 // gets name or id of an agency ,car brand and carNumber to be removed
@@ -93,11 +77,6 @@ carMarket.removeCarFromAgency = function (nameOrId, brand, carNumber) {
     }
     return removedCar;
 }
-// test
-// let res = carMarket.getAgency('The Auto World');
-// console.log(res.cars[1])
-// carMarket.removeCarFromAgency('The Auto World', 'toyota','kHE8f');
-// console.log(res.cars[1])
 
 //Change the cash or credit of an agency.
 //gets the name or id of an agency,and newCash will be the new cash value of the agancy
@@ -127,11 +106,6 @@ carMarket.updateCarPrice = function (nameOrId, brand, carNumber, newPrice) {
         }
     }
 }
-// test
-// let res = carMarket.getAgency('The Auto World');
-// console.log(res.cars[1])
-// carMarket.updateCarPrice('The Auto World', 'toyota','-RQgN',90000);
-// console.log(res.cars[1])
 
 // Calculate and return the total revenue for a specific agency
 carMarket.getTotalAgencyRevenue = function (nameOrId) {
@@ -147,11 +121,6 @@ carMarket.getTotalAgencyRevenue = function (nameOrId) {
         return revenue;
     }
 }
-// test
-// let res = carMarket.getAgency('The Auto World');
-// console.log(res)
-// res=carMarket.getTotalAgencyRevenue('The Auto World');
-// res
 
 //Transfer a car from one agency to another
 // get a brand and carnumber,and nameOrId1 is the current name or id of the car's agency
@@ -167,16 +136,6 @@ carMarket.transferCarBetweenAgencies = function (brand, carNumber, nameOrId1, na
         }
     }
 }
-// //test
-// let res = carMarket.getAgency('CarMax');
-// console.log(res);
-// console.log('CarMax:+B+\n',res.cars[3]);
-// let res2 = carMarket.getAgency('The Auto World');
-// console.log(res2);
-// carMarket.transferCarBetweenAgencies('Alpha romeo', '6t7QU', 'CarMax', 'The Auto World');
-// console.log('CarMax:+A+\n',res.cars[3])
-// console.log(res2);
-// console.log('The Auto World:+A+\n',res2.cars[res2.cars.length-1]);
 
 // Agency Operations end ------------------------------------------------------------------------
 
@@ -189,9 +148,6 @@ carMarket.getTheCustomer = function (nameOrId) {
         }
     })
 }
-// //test
-// carMarket.getTheCustomer('Lilah Goulding');
-// carMarket.getTheCustomer('cnTobUDy6');
 
 //for use in other functions
 carMarket.getCustomer2 = function (nameOrId) {
@@ -213,8 +169,6 @@ carMarket.getAllCustomers = function () {
     console.log(customersNames);
     //return customersNames;
 }
-// //test
-// carMarket.getAllCustomers();
 
 // Change the cash of a customer.
 //gets customer nameOrId and change the customer cash to newCash
@@ -224,10 +178,6 @@ carMarket.ChangeCustomerCash = function (nameOrId, newCash) {
         customer.cash = newCash;
     }
 }
-// //test
-// carMarket.getTheCustomer('Ravi Murillo');
-// carMarket.ChangeCustomerCash('Ravi Murillo',30000);
-// carMarket.getTheCustomer('Ravi Murillo');
 
 // Calculate the total value of all cars owned by a specific customer
 carMarket.getCustomerTotalCarValue = function (nameOrId) {
@@ -241,16 +191,7 @@ carMarket.getCustomerTotalCarValue = function (nameOrId) {
         return totalValue;
     }
 }
-// //test
-// let res;
-// res=carMarket.getCustomerTotalCarValue('Lilah Goulding');
-// res
-// res=carMarket.getCustomerTotalCarValue('Ravi Murillo');
-// res
-// res=carMarket.getCustomerTotalCarValue('Bob Steel');
-// res
-// res=carMarket.getCustomerTotalCarValue('Will Reyes');
-// res
+
 //   Customer Operations:end----------------------------------------------------------------------- 
 
 //3. Car Operations:start-------------------------------------------------------------------------- 
@@ -267,8 +208,6 @@ carMarket.carsAvailable = function () {
     console.log(carsArray);
     return carsArray;
 }
-// //test
-// carMarket.carsAvailable();
 
 carMarket.carsAvailableWithBrand = function (brand) {
     const carsArray = [];
@@ -283,8 +222,6 @@ carMarket.carsAvailableWithBrand = function (brand) {
     }
     return carsArray;
 }
-// //test
-// carMarket.carsAvailableWithBrand('bmw');
 
 // Search for cars based on certain criteria. The search parameters should include the
 // production year, price, and optionally, the brand of the car
@@ -300,11 +237,6 @@ carMarket.searchCars = function (year, price, brand = '') {
     console.log(wantedCars);
     return wantedCars;
 }
-// //test
-// let res = carMarket.searchCars(2019, 296900);
-// res
-// res = res.length;
-// res
 
 // Return the most expensive car available for sale
 carMarket.getMostExpensiveCar = function () {
@@ -331,14 +263,9 @@ carMarket.getCheapestCar = function () {
     console.log(cheapestCar);
     return cheapestCar;
 }
-// //test
-// carMarket.carsAvailable();
-// console.log('MostExpensiveCar----->');
-// carMarket.getMostExpensiveCar();
-// console.log('CheapestCar----->');
-// carMarket.getCheapestCar();
 
 //   Car Operations:end------------------------------------------------------------------------------ 
+
 //4. Car Purchase Operations:start---------------------------------------------------------------------
 // Implement a sellCar function that sells a car to a specific customer. This function
 // should:
@@ -372,29 +299,24 @@ carMarket.sellCar = function (customerNameOrId, agancyNameOrId2, brandName, carN
             wantedCar.ownerId=customer.id;
             customer.cash-=wantedCar.price;
             customer.cars.push(wantedCar);
-            // TODO Update the tax authority's records.
-
-
-
+            // TODO Update the tax authority's records & the customer.cash after the tax!
+            this.taxesAuthority.totalTaxesPaid+=(wantedCar.price*10/100)
+            this.taxesAuthority.numberOfTransactions++;
         }
     }
 }
-// //test
-// let res = carMarket.getAgency('CarMax');
-// console.log(res);
-// console.log('CarMax:+B+\n',res.cars[1]);
-// let res2=carMarket.getCustomer2('Ravi Murillo');
-// console.log(res2);
-// carMarket.sellCar('Ravi Murillo','CarMax','toyota','Land Cruiser',2005);
-// console.log('customer A---->',res2);
-// console.log('agency-=--=-=A',res);
-// console.log('CarMax:+A---+\n',res.cars[1]);
 
-
-
-
-
-// Calculate and return the total revenue of the entire market (Method:
-//     getTotalMarketRevenue ).
+// Calculate and return the total revenue of the entire market 
+carMarket.getTotalMarketRevenue=function(){
+    //all cars in all agencies
+    let carsArray = this.carsAvailableWithBrand('');
+    let sum=0;
+    for(car of carsArray){
+        sum+=car.price;
+    }
+    console.log(sum);
+    return sum;
+}
 
 //   Car Purchase Operations:end---------------------------------------------------------------------
+module.exports = carMarket;
